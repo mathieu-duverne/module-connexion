@@ -21,15 +21,12 @@ if (isset($_POST['form_inscription']))
 			$loginexist = $reqlogin->rowCount();
 				if ($loginexist == 0) 
 				{
-
-					
-				
-			
 				$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)");
-				$insertmbr ->execute(array($log, $name, $surname, $password));
-				echo"Tout correspond vous etes inscrit";
+				$insertmbr ->execute(array($login, $name, $surname, $password));
 				header('location: connexion.php');
-		}
+				
+	}
+
 		else
 		{
 			echo "le login est déja utilisée";
@@ -40,10 +37,12 @@ if (isset($_POST['form_inscription']))
 			echo  "le mot de passe ne correspond pas !";
 		}
 
-		
+			}
+		}
 
-	}
-}
+	
+  
+
 
 ?>
 <!DOCTYPE html>
