@@ -1,49 +1,35 @@
 <?php
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=moduleconnexion', 'root', '');
+session_start();
+require_once'includes/db.php';
 
-if (isset($_POST['form_inscription'])) 
+            if (isset($_POST['form_inscription'])) 
 {
-	if (!empty($_POST['log']) AND !empty($_POST['name']) AND !empty($_POST['surname']) AND !empty($_POST['password']) AND !empty($_POST['confirm_password'])) 
+if (!empty($_POST['login']) AND !empty($_POST['name']) AND !empty($_POST['surname']) AND !empty($_POST['pass']) AND !empty($_POST['confirm_password'])) // a voir la variables n'as encore prisIMPROTANT
 	{
-
-
-		$login = htmlspecialchars($_POST['log']);
+		// $requete = "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)";
+$stmt = mysqli_stmt_init($db);
+if (mysqli_stmt_prepare($stmt, "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)")) {
+		$login = htmlspecialchars($_POST['login']);//sert a securiser la variables
 		$name = htmlspecialchars($_POST['name']);
 		$surname = htmlspecialchars($_POST['surname']);
-		$password = sha1($_POST['password']);
-		$confirm_password = sha1($_POST['confirm_password']);
-
-		if ($password == $confirm_password) 
-		{
-
-			$reqlogin = $bdd->prepare('SELECT * FROM utilisateurs WHERE login = ?');
-			$reqlogin-> execute(array($login));
-			$loginexist = $reqlogin->rowCount();
-				if ($loginexist == 0) 
-				{
-				$insertmbr = $bdd->prepare("INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)");
-				$insertmbr ->execute(array($login, $name, $surname, $password));
-				header('location: connexion.php');
-				
+		$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+		$confirm_pass = ($_POST['confirm_password']);
+		$pwdyea = password_verify($confirm_pass, $pass);
+		if ($pwdyea == true) {
+		 /* Association des variables SQL */
+  	 	 mysqli_stmt_bind_param($stmt,'ssss', $login, $name, $surname, $pass);
+   	 		/* Exécution de la requête le 'ssss' reprensente les 4 champs d'apres si tu remplace par d celle ci n'apparait pas ... */
+    			mysqli_stmt_execute($stmt);
+    			 mysqli_stmt_close($stmt);
+    				 header("location: connexion.php");
+}
+else
+echo "c dur la vie quand tu sais pas bien confirmer ton mot de passe";
+}
+/* Fermeture de la connexion */
+mysqli_close($db);
 	}
-
-		else
-		{
-			echo "le login est déja utilisée";
-		}
-			}
-		else
-		{
-			echo  "le mot de passe ne correspond pas !";
-		}
-
-			}
-		}
-
-	
-  
-
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -51,12 +37,19 @@ if (isset($_POST['form_inscription']))
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Inscris-toi</title>
+	<style>
+		body{
+			text-align: center;
+			font-size: 12px;
+			letter-spacing: 2px;
+		}
+	</style>
 </head>
 <body>
-	<form action="" method="post">
-		<label for="log">login</label>
+	<center><form action="" method="post">
+		<label for="login">login</label>
 		<br>
-		<input id="log" name="log" type="text" value="<?php if(isset($log)) { echo $log; } ?>" required>
+		<input id="login" name="login" type="text" value="<?php if(isset($login)) { echo $login; } ?>" required>
 		<br>
 		<label for="name">Prenom</label>
 		<br>
@@ -66,17 +59,17 @@ if (isset($_POST['form_inscription']))
 		<br>
 		<input name="surname" value="<?php if(isset($surname)) { echo $surname; } ?>" type="text">
 		<br>
-		<label for="password">Password</label>
+		<label for="pass">Password</label>
 		<br>
-		<input name="password" id="password" type="password" required>
+		<input name="pass" id="pass" type="password" required>
 		<br>
 		<label for="confirm_password">confirm your Password</label>
 		<br>
 		<input id="confirm_password" name="confirm_password" type="password" required>
-		<br>
+		<br> <br>
 		<input type="submit" value="Inscription" id="form_inscription" name="form_inscription">
-
-	</form>
-	
-</body>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="connexion.php">Connectez-vous</a>
+	</form></center>
+	</body>
 </html>
