@@ -37,6 +37,8 @@ mysqli_close($db);
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Inscris-toi</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="styleconnexion.css">
 	<style>
 		body{
 			text-align: center;
@@ -45,31 +47,32 @@ mysqli_close($db);
 		}
 	</style>
 </head>
-<body>
-	<center><form action="" method="post">
-		<label for="login">login</label>
+<body class="text-center">
+	<form class="form-signin" action="" method="post">
+		<img class="mb-4" src="includes/bootstrap-solid.svg" alt="" width="72" height="72">
+		<h1 class="h3 mb-3 font-weight-normal">Please Sign up</h1>
+		<label class="label" for="login">login</label>
 		<br>
-		<input id="login" name="login" type="text" value="<?php if(isset($login)) { echo $login; } ?>" required>
+		<input class="form-control" id="login" name="login" type="text" value="<?php if(isset($login)) { echo $login; } ?>" required>
 		<br>
-		<label for="name">Prenom</label>
+		<label class="label" for="name">Prenom</label>
 		<br>
-		<input id="name" name="name" type="text" value="<?php if(isset($name)) { echo $name; } ?>" required>
+		<input class="form-control" id="name" name="name" type="text" value="<?php if(isset($name)) { echo $name; } ?>" required>
 		<br>
-		<label for="surname">nom</label>
+		<label class="label" for="surname">nom</label>
 		<br>
-		<input name="surname" value="<?php if(isset($surname)) { echo $surname; } ?>" type="text">
+		<input class="form-control" name="surname" value="<?php if(isset($surname)) { echo $surname; } ?>" type="text">
 		<br>
-		<label for="pass">Password</label>
+		<label class="label" for="pass">Password</label>
 		<br>
-		<input name="pass" id="pass" type="password" required>
+		<input class="form-control" name="pass" id="pass" type="password" required>
 		<br>
-		<label for="confirm_password">confirm your Password</label>
+		<label class="label" for="confirm_password">confirm your Password</label>
 		<br>
-		<input id="confirm_password" name="confirm_password" type="password" required>
+		<input class="form-control" id="confirm_password" name="confirm_password" type="password" required>
 		<br> <br>
-		<input type="submit" value="Inscription" id="form_inscription" name="form_inscription">
-		&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="btn btn-lg btn-primary btn-block" name="form_inscription" type="submit">Sign Up</button>
 		<a href="connexion.php">Connectez-vous</a>
-	</form></center>
+	</form>
 	</body>
 </html>

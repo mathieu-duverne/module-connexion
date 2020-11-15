@@ -14,9 +14,11 @@ session_start();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Editez votre profil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styleconnexion.css">
 </head>
-<body align="center">
-<h1><?php echo $row['prenom']; ?> edite ton profil</h1>
+<body>
+<h1><?php echo $row['prenom']; ?> Edite ton profil</h1>
 <form action="edition.php" method="POST">
 	<label for="newlogin">Login :</label><br>
 	<input type="text" name="newlogin" placeholder="Change ton login" value="<?php echo $row['login'];?>"><br><br>
@@ -24,14 +26,15 @@ session_start();
 	<input type="text" name="newprenom" placeholder="Change ton prenom" value="<?php echo $row['prenom'];?>"><br><br>
 	<label for="newnom">Nom</label><br>
 	<input type="text" name="newnom" placeholder="Change ton nom" value="<?php echo $row['nom'];?>"> <br><br>
+
 	<label for="oldpass">Ancien mot de passe</label><br>
 	<input type="password" name="oldpass" placeholder="rentre ton ancien mot de passe" ><br><br>
+
 	<label for="newpass">Nouveau mot de passe</label><br>
-	<input type="password" name="newpass" placeholder="Change ton mot de passe" ><br>
-	<br>
+	<input type="password" name="newpass" placeholder="Change ton mot de passe" ><br><br>
+
 	<label for="newconfirmpass">Confirme ton nouveau mot de passe</label><br>
-	<input type="password" name="newconfirmpass" placeholder="confirme la saisie ton mot de passe" > <br>
-	<br>
+	<input type="password" name="newconfirmpass" placeholder="confirme la saisie ton mot de passe"><br><br>
 	<input type="submit" name="submit" value="Valide tes changements">
 	<a href="index.php">BACK TO U PROFILE</a>
 </form>
@@ -49,15 +52,10 @@ session_start();
       $query = "UPDATE utilisateurs SET login = '$newlogin', prenom = '$newprenom', nom = '$newnom' WHERE id = '$id';";
                     $result = mysqli_query($db, $query);
                     echo "vos donée ont bien etaient modifié<a href=\"connexion.php\"></a>";
-
-
         if (isset($_POST['oldpass']) && isset($_POST['newpass']) && isset($_POST['newconfirmpass'])) {
-
-
 
                     	$oldpass = $_POST['oldpass'];
        					$newpass = $_POST['newpass'];
-
         				$newconfirmpass = password_hash($_POST['newconfirmpass'], PASSWORD_DEFAULT);
 
         				$oldcheck = password_verify($oldpass, $row['password']);

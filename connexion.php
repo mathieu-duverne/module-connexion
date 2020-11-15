@@ -1,3 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Connexion</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="styleconnexion.css">
+</head>
+	<body class="text-center">
+    <form class="form-signin" action="connexion.php" method="POST">
+    	
+  <img class="mb-4" src="includes/bootstrap-solid.svg" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+  <label for="loginconnect" class="sr-only">Login</label>
+  <input type="text" name="loginconnect" class="form-control" required placeholder="Login">
+
+  <label for="passconnect" class="sr-only">Password</label>
+  <input type="password" name="passconnect" class="form-control" placeholder="Password" required>
+
+  <div class="checkbox mb-3"></div>
+
+  <button class="btn btn-lg btn-primary btn-block" name="formconnexion" type="submit">Sign in</button>
+
+  <a href="inscription.php">S'inscrire</a>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+</form>
+</body>
+</html>
 <?php
 require_once'includes/db.php';
 
@@ -15,7 +46,7 @@ mysqli_stmt_prepare($stmt, 'SELECT * FROM utilisateurs WHERE login=? OR password
 					$pwdCheck = password_verify($passco, $row['password']);
 					// var_dump($passco);
 					// var_dump($row['password']);	
-					//  var_dump($row);
+					  // var_dump($row);
 	if ($pwdCheck == false && $login != $row['login'] ) {
 				echo "mot de passe incorrect ou login incorrect";
 			}
@@ -29,29 +60,8 @@ mysqli_stmt_prepare($stmt, 'SELECT * FROM utilisateurs WHERE login=? OR password
 				$_SESSION['nom']=$row['nom'];
 				$_SESSION['prenom']=$row['prenom'];
 				header("location:index.php?connexion=succée");
-					}	
+				}	
     		}mysqli_stmt_close($stmt);
     	}
+ 
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Connexion</title>
-
-	<link rel="stylesheet" type="text/css" href="styleconnexion.css">
-</head>
-<body>
-	<form method="post" action="connexion.php">
-		<label for="loginconnect">Login : </label>
-		<input required type="text" name="loginconnect" id="loginconnect" value="<?php if(isset($login)) { echo $login; } ?>" >
-		<label for="passconnect">Password : </label>
-		<input type="password" name="passconnect" id="passconnect" required>
-		<input type="submit" value="Connexion" name="formconnexion">
-		
-		<a href="inscription.php">S'inscrire</a>
-	</form>
-	
-</body>
-</html>
