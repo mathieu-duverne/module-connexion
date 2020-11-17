@@ -1,36 +1,3 @@
-<?php
-session_start();
-require_once'includes/db.php';
-
-            if (isset($_POST['form_inscription'])) 
-{
-if (!empty($_POST['login']) AND !empty($_POST['name']) AND !empty($_POST['surname']) AND !empty($_POST['pass']) AND !empty($_POST['confirm_password'])) // a voir la variables n'as encore prisIMPROTANT
-	{
-		// $requete = "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)";
-$stmt = mysqli_stmt_init($db);
-if (mysqli_stmt_prepare($stmt, "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)")) {
-		$login = htmlspecialchars($_POST['login']);//sert a securiser la variables
-		$name = htmlspecialchars($_POST['name']);
-		$surname = htmlspecialchars($_POST['surname']);
-		$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-		$confirm_pass = ($_POST['confirm_password']);
-		$pwdyea = password_verify($confirm_pass, $pass);
-		if ($pwdyea == true) {
-		 /* Association des variables SQL */
-  	 	 mysqli_stmt_bind_param($stmt,'ssss', $login, $name, $surname, $pass);
-   	 		/* Exécution de la requête le 'ssss' reprensente les 4 champs d'apres si tu remplace par d celle ci n'apparait pas ... */
-    			mysqli_stmt_execute($stmt);
-    			 mysqli_stmt_close($stmt);
-    				 header("location: connexion.php");
-}
-else
-echo "c dur la vie quand tu sais pas bien confirmer ton mot de passe";
-}
-/* Fermeture de la connexion */
-mysqli_close($db);
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -39,40 +6,88 @@ mysqli_close($db);
 	<title>Inscris-toi</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="styleconnexion.css">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<style>
 		body{
 			text-align: center;
 			font-size: 12px;
 			letter-spacing: 2px;
+			color: black;
+		}
+		label{
+			color: black;
 		}
 	</style>
 </head>
 <body class="text-center">
-	<form class="form-signin" action="" method="post">
-		<img class="mb-4" src="includes/bootstrap-solid.svg" alt="" width="72" height="72">
-		<h1 class="h3 mb-3 font-weight-normal">Please Sign up</h1>
-		<label class="label" for="login">login</label>
-		<br>
-		<input class="form-control" id="login" name="login" type="text" value="<?php if(isset($login)) { echo $login; } ?>" required>
-		<br>
-		<label class="label" for="name">Prenom</label>
-		<br>
+	<form class="form-signin" action="inscription.php" method="post">
+		<img class="mb-4" src="images/steve.jpg" alt="" width="100" height="100">
+		<h1>Please Sign up</h1>
+		<label  for="login">login</label>
+		<input class="form-control" name="login" type="text" value="<?php if(isset($login)) { echo $login; } ?>" required>
+		<label  for="name">Prenom</label>
 		<input class="form-control" id="name" name="name" type="text" value="<?php if(isset($name)) { echo $name; } ?>" required>
-		<br>
-		<label class="label" for="surname">nom</label>
-		<br>
-		<input class="form-control" name="surname" value="<?php if(isset($surname)) { echo $surname; } ?>" type="text">
-		<br>
-		<label class="label" for="pass">Password</label>
-		<br>
-		<input class="form-control" name="pass" id="pass" type="password" required>
-		<br>
-		<label class="label" for="confirm_password">confirm your Password</label>
-		<br>
-		<input class="form-control" id="confirm_password" name="confirm_password" type="password" required>
-		<br> <br>
-		<button class="btn btn-lg btn-primary btn-block" name="form_inscription" type="submit">Sign Up</button>
+		<label  for="surname">nom</label>
+		<input class="form-control" name="surname" value="<?php if(isset($surname)) { echo $surname; } ?>" type="text" required>
+		<label  for="pass">Password</label>
+		<input class="form-control" name="pass" type="password" required>
+		<label  for="confirm_password">confirm your Password</label>
+		<input class="form-control"  name="confirm_password" type="password" required>
+		<button class="btn btn-info btn-lg" type="submit" name="form_inscription">Inscription</button><br>
 		<a href="connexion.php">Connectez-vous</a>
-	</form>
-	</body>
-</html>
+		</form>
+			</body>
+			</html>>
+		
+<?php
+            if (isset($_POST['form_inscription'])) 
+{
+		require_once'includes/db.php';
+		require_once'includes/function.php';
+
+					$login = htmlspecialchars($_POST['login']);
+					$name = htmlspecialchars($_POST['name']);
+					$surname = htmlspecialchars($_POST['surname']);
+					$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+					$confirm_pass = ($_POST['confirm_password']);
+					$pwd_verif_inscription = password_verify($confirm_pass, $pass);
+//si le login existe deja dans la bdd
+if (uidExists($db, $login) !== false) {
+	echo "Le login insérer est deja pris";
+	exit();
+}
+//si le login est rentré avec des mauvais caractère
+elseif (invalidLogin($login) !== false) {
+		echo "login invalid il ne doit pas contenir de caractère speciaux";
+		exit();
+}
+elseif (invalidPass($confirm_pass) !== false) {
+		echo "password invalid il ne doit pas contenir de caractère speciaux et pas plus de 23 caractère";
+		exit();
+}
+elseif (invalidName($name) !== false) {
+		echo "Name invalid il ne doit pas contenir de caractère speciaux";
+		exit();
+}
+elseif (invalidSurname($surname) !== false) {
+		echo "Surname invalid il ne doit pas contenir de caractère speciaux";
+		exit();
+}
+//si la verification du mdp a mal était faite
+elseif (pwdMatch($pwd_verif_inscription) !== true) {
+	echo "mot de passe mal confirmer c dure la vie qd t pas steve jobs";
+	exit();
+}
+else{
+//function qui insert tous les elements
+inscription($db, $login, $surname, $name, $pass);
+mysqli_close($db);
+header('location: connexion.php');
+exit();
+	}
+}
+/* Fermeture de la connexion */
+?>
+
