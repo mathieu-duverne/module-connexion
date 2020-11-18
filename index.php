@@ -57,13 +57,13 @@ if(isset($_SESSION['userlogin']) && isset($_SESSION['userpass']) && isset($_SESS
 			echo "<li><a class=\"sis\">".$_SESSION['prenom']." Jobs</a></li>";
 			echo "<a  href=\"profil.php\" class=\"btn btn-default btn-sm sisi\">
           <span class=\"glyphicon glyphicon-user\"></span>Profil 
-        </a>";
-		
+        </a>";      
 ?>
     </ul>
   </div>
 </nav>
 <main>
+	<?php if ($_SESSION['id'] >= 2) { ?>
 <img width="250" height="200" class="rounded" src="images/imagesteve.jpg">
 <h1>Bienvenue Steve <?php echo$_SESSION['nom']; ?></h1>
 <h5>Voila la page d'accueil d'un vrai steve jobs Deconnecte toi ou va voir ton profil en haut, the most powerful is the design</h5>
@@ -74,8 +74,9 @@ if(isset($_SESSION['userlogin']) && isset($_SESSION['userpass']) && isset($_SESS
 
 <?php
  }
+}
 if ($_SESSION['id'] == 1) {
- 	echo "<h1>You are the ADMIN of this website</h1><br><a href=\"profil.php\">Profil</a><br>
+ 	echo "<img width=\"250\" height=\"200\" class=\"rounded\" src=\"images/imagesteve.jpg\"><h1>You are the ADMIN of this website</h1><br><a href=\"profil.php\">Profil</a><br>
 <a href=\"admin.php\">Gerer les utilisateurs de votres site</a>
  	";
  	exit();

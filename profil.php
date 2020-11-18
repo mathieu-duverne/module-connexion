@@ -13,9 +13,6 @@ require_once'includes/db.php';
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
-    div{
-      
-    }
     .sisi{
       margin-right: 10px;
       margin-top: 10px;
@@ -79,6 +76,7 @@ require_once'includes/db.php';
 				$userinfo['prenom'] = $_SESSION['prenom'];
 				$userinfo['pass'] = $_SESSION['userpass'];
 				// var_dump($userinfo);
+
 	
 	echo "<h2>Une fois vos modifications faites</h12><br><h3>Appuyer une fois sur ce boutton pour visualisé vos modifications !</h3><br><br><a href=\"profil.php\" class=\"btn btn-info btn-ms\">
           <span class=\"glyphicon glyphicon-send\"></span> Send 
