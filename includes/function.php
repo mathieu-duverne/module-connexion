@@ -133,14 +133,12 @@ if(isset($_POST['formconnexion'])){
 					$result = mysqli_stmt_get_result($stmt);
  	if($row = mysqli_fetch_assoc($result)){
 							//mysqli_fetch_row()
- 		var_dump($row);			
- if ($login == $row['login']) {
- 	var_dump($row);
- 					var_dump($row['password']);
- 						var_dump($passco);
+ 													//var_dump($row);			
+ if ($login == $row['login']) {		
+ 													//var_dump($row);
+ 													//var_dump($row['password']);
+ 													//var_dump($passco);
 $pwdcheck = password_verify($passco, $row['password']);
-
- 
  					//vers la ca bloque erreur n'ont apprecié demander a ruben
 if ($pwdcheck == true) {
  		session_start();
@@ -155,7 +153,7 @@ if ($pwdcheck == true) {
  				mysqli_stmt_close($stmt);
  				exit();
  			}
- else{
+ 			else{
  				$resultat2 = false;
  				return $resultat2;
 				}

@@ -19,7 +19,6 @@ require_once'includes/db.php';
     }
     main{
       text-align: center;
-     
     }
   main div{
      display:flex;
