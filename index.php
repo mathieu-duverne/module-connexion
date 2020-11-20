@@ -19,9 +19,6 @@
   	.rounded{
   		border-radius: 50%;
   	}
-  
-
-
   </style>
 </head>
 <body class="text-center">
@@ -32,7 +29,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#">Page 1-1</a></li>
           <li><a href="#">Page 1-2</a></li>
@@ -48,16 +45,17 @@ session_start();
 	
      echo" <li><a href=\"inscription.php\"><span class=\"glyphicon glyphicon-user\"></span> Sign Up</a></li>
       <li><a href=\"connexion.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a></li>";
+      echo "</ul></div></nav>";
+      echo "<br><br><br><h2>Bienvenue sur le module connexion</h2><br><h5>connecte toi ou inscris toi en haut a droite</h5>";
+      exit();
 }
 if(isset($_SESSION['userlogin']) && isset($_SESSION['userpass']) && isset($_SESSION['id'])){
 			$userprenom=$_SESSION['prenom'];
-			
 			// var_dump($_SESSION['userlogin']);
 			// var_dump($_SESSION['userpass']);
 			echo "<li><a class=\"sis\">".$_SESSION['prenom']." Jobs</a></li>";
 			echo "<a  href=\"profil.php\" class=\"btn btn-default btn-sm sisi\">
-          <span class=\"glyphicon glyphicon-user\"></span>Profil 
-        </a>";      
+          <span class=\"glyphicon glyphicon-user\"></span>Profil</a>";      
 ?>
     </ul>
   </div>
@@ -65,24 +63,18 @@ if(isset($_SESSION['userlogin']) && isset($_SESSION['userpass']) && isset($_SESS
 <main>
 	<?php if ($_SESSION['id'] >= 2) { ?>
 <img width="250" height="200" class="rounded" src="images/imagesteve.jpg">
-<h1>Bienvenue Steve <?php echo$_SESSION['nom']; ?></h1>
+<h1>Bienvenue Steve <?php echo $_SESSION['nom']; ?></h1>
 <h5>Voila la page d'accueil d'un vrai steve jobs Deconnecte toi ou va voir ton profil en haut, the most powerful is the design</h5>
 <a href="deconnexion.php">Deconnexion</a>
-
-
-
-
 <?php
  }
 }
 if ($_SESSION['id'] == 1) {
  	echo "<img width=\"250\" height=\"200\" class=\"rounded\" src=\"images/imagesteve.jpg\"><h1>You are the ADMIN of this website</h1><br><a href=\"profil.php\">Profil</a><br>
-<a href=\"admin.php\">Gerer les utilisateurs de votres site</a>
- 	";
+<a href=\"admin.php\">Gerer les utilisateurs de votres site</a>";
  	exit();
  }
 ?>
-	
 </main>
 </body>
 </html>

@@ -71,7 +71,8 @@ if (isset($_POST['adminlog']) && isset($_POST['adminprenom']) && isset($_POST['a
 }
               $query = "UPDATE utilisateurs SET login = '$newlogin', prenom = '$newprenom', nom = '$newnom' WHERE id = '$userid';";
               $result = mysqli_query($db, $query);
-                      echo "<a href=\"admin.php\" class=\"btn btn-primary\">Modification completée</a><br>";
+                      echo "<center><br><h2
+                      ><strong>Bravo Appuie pour Observé les changements</strong></h2><br><a href=\"admin.php\" class=\"btn btn-primary\">Modification completée</a><br></center>";
                       exit();
 	}
 
@@ -122,7 +123,38 @@ if (isset($_POST['adminlog']) && isset($_POST['adminprenom']) && isset($_POST['a
   </div>
 </div>
 </form><br>
-<h5 class="text-center">rafraichie pour observé les changements</h5><br>
+<h5 class="text-center">Pour supprimer</h5><br>
+<a href="" class="btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForme">Supprime</a><br>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modalSubscriptionForme" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+                </div><br><br><h5 class="modal-title">Confirme La suppréssion de l'utilisateur <?php echo $_SESSION['userid'] ?></h5>
+    
+    <br><br><br>
+    <div class="modal-footer"> 
+     <form method="post"><button type="submit" name="delete" class="btn btn-outline-primary">Confirmer La supprésion</button></form>
+    </div>
+  </div>
+  </div>
+</div>
+<?php 
+  if (isset($_POST['delete'])) {
+    $userid = $_SESSION['userid'];
+    if ($userid == 1) {
+      echo "<br><strong>ATTENTION</strong><br><h4>Tu ne peux pas supprimé ton compte Admin</h4><br>BACK<br><a href=\"admin.php\" class=\"btn btn-outline-primary\">Reviens sur le page d'administration</a> <br><br>";
+      exit();
+    }
+    $query=mysqli_query($db,"DELETE FROM utilisateurs WHERE id = '$userid'");
+    echo "<strong>Merci vous a bien supprimer l'utilisateur $userid</strong><br>Appuyer ci-dessous pour pouvoir supprimeé ou modifié d'autres utilisateurs";
+
+    
+  }
+
+ ?>
+
+<br>
 <a href="admin.php" class="btn btn-outline-primary">Reviens sur le page d'administration</a> <br><br>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

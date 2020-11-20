@@ -36,26 +36,27 @@ if($_SESSION['id']!=1){
 }
             $requete =  ("SELECT * FROM utilisateurs;");
             $resultat = mysqli_query($db, $requete);
-            $j=0;
-            while (($field = mysqli_fetch_assoc($resultat))!== null){//pour les champs voir toutes les facon de faire W3SCHOOL
-                if ($j==0) {
-                    foreach ($field as $key => $value) {
-            } 
-            $j=$j+1;
-            $idbutn = 0;
-           }
-                    $o = 0;
-                    foreach ($field as $value) {
-                        if ($o == 0){
-                            $idbutn = $value;
-                            $o = 1;
-                        }
-        }
+    //         $j=0;
+    //         while (($field = mysqli_fetch_assoc($resultat))!== null){//pour les champs voir toutes les facon de faire W3SCHOOL
+    //             if ($j==0) {
+    //                 foreach ($field as $key => $value) {
+    //         } 
+    //         $j=$j+1;
+    //         $idbutn = 0;
+    //        }
+    //                 $o = 0;
+    //                 foreach ($field as $value) {
+    //                     if ($o == 0){
+    //                         $idbutn = $value;
+    //                         $o = 1;
+    //                     }
+    //     }
+    // }
 		if($_SESSION['id']==1){
 			 $requete =  ("SELECT * FROM utilisateurs;");
                 $resultat = mysqli_query($db, $requete);
         $i=0;
-       echo"<h1>Tous les utilisateurs du WEBSITE</h1><table><thead><tr>";
+       echo"<div class=\"container-fluid\"><h1>Tous les utilisateurs du WEBSITE</h1><table class=\"table table-hover\"><thead><tr>";
                 while (($field = mysqli_fetch_assoc($resultat))!== null){//pour les champs voir toutes les facon de faire W3SCHOOL
                 if ($i==0) {
                     foreach ($field as $key => $value) {
@@ -74,36 +75,13 @@ if($_SESSION['id']!=1){
                         }
                         echo '<td>'.$value.'</td>';
         }
-        echo"<th><form method=\"post\" action=\"adminsisi.php\"><button  name=\"idbutton\" value=\"$idbtn\" >Edite</button></form></th><th><button type=\"submit\" value=\"$idbutn\" name=\"\" data-toggle=\"modal\" data-target=\"#modalSubscriptionForm\" class=\btn btn-light\">Delete</button></th></tr>";
+        echo"<th><form method=\"post\" action=\"adminsisi.php\"><button  name=\"idbutton\" value=\"$idbtn\" >Edite/Delete</button></form></th>";
     }
        echo "</tbody></table><br><br><a href=\"index.php\">Back</a>";
-		}
+		 mysqli_close($db);}
  ?>
- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modalSubscriptionForm" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <form><button type="submit" name="" class="btn btn-primary">Confirmer La supprésion</button></form>
-   <?php 
-        if (isset($_POST)) {
-        $query=mysqli_query($db,"SELECT id FROM utilisateurs WHERE id='$idbutn'");
-               while (($rows=mysqli_fetch_array($query))!== null) {
-                    foreach ($rows as $key) {
-                        // var_dump($key);
-                        // var_dump($_POST);
-                         if ($key == $idbutn) {
-                            $i=0;$query = mysqli_query($db,"SELECT * FROM utilisateurs;");
-                            while($row = mysqli_fetch_array($query)){
-                            echo"<td scope=\"row\">".$row['id']."</td><td>".$row['login']."</td><td>".$row['prenom']."</td><td>".$row['nom']."";
-                         }
-            }break;
-       }
-   }
-   }                
-} mysqli_close($db);
-    ?>
-    </div>
-  </div>
-</div>
+  
+   </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
